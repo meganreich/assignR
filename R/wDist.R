@@ -50,7 +50,10 @@ wDist = function(pdR, sites, maxpts = 1e5){
     d = distGeo(pdSP, sites[i,])
     b = bearing(pdSP, sites[i,])
     w = pdSP@data[,1]
+    m = w/w #mask of study area
+    w.dens = density(d, weights = m) #distance by number of pixels
     d.dens = density(d, weights = w)
+    d.dens$y = d.dens$y/w.dens$y #normalize
     b.dens = density(b, weights = w)    
     
     #record weighted mean of distance distribution
